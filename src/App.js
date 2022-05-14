@@ -8,19 +8,14 @@ import { getWeeksInAYear } from "./utils/helper"
 const styles = {
   ...globalStyles,
   ...fonts,
-  app: {},
 }
 
-const App = (
-  {
-    // classes
-  }
-) => {
+const App = () => {
   const data = useMemo(() => getWeeksInAYear(), [])
   return (
     <>
       <Header weeksRemaining={data.weeksRemaining} />
-      <Home data={data.chartData} />
+      <Home data={data} />
     </>
   )
 }
