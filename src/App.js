@@ -1,7 +1,9 @@
+import { useMemo } from "react"
 import withStyles from "react-jss"
 import globalStyles from "./styles/global"
 import fonts from "./styles/fonts"
-import { Home } from "./layouts"
+import { Header, Home } from "./layouts"
+import { getWeeksInAYear } from "./utils/helper"
 
 const styles = {
   ...globalStyles,
@@ -9,11 +11,17 @@ const styles = {
   app: {},
 }
 
-const App = ({ classes }) => {
+const App = (
+  {
+    // classes
+  }
+) => {
+  const data = useMemo(() => getWeeksInAYear(), [])
   return (
-    <div className={classes.app}>
-      <Home />
-    </div>
+    <>
+      <Header weeksRemaining={data.weeksRemaining} />
+      <Home data={data.chartData} />
+    </>
   )
 }
 
