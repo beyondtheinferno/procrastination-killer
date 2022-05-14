@@ -17,20 +17,20 @@ const styles = {
     flexWrap: "wrap",
   },
   year: {
+    fontWeight: 500,
     textAlign: "center",
   },
   box: {
     width: `${BOX_SIZE}px`,
     height: `${BOX_SIZE}px`,
     margin: `${MARGIN}px`,
-    background: colors.green,
   },
 }
 
 const Waffle = ({ classes, data }) => {
   return (
     <div className={classes.container}>
-      <h4 className={classes.year}>{data.year}</h4>
+      <p className={classes.year}>{data.year}</p>
       <div className={classes.waffleContainer}>
         {[...Array(data.count).keys()].map((_, i) => (
           <div

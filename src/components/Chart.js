@@ -1,4 +1,5 @@
 import withStyles from "react-jss"
+import colors from "../styles/colors"
 import Waffle from "./Waffle"
 
 const styles = {

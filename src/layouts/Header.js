@@ -8,10 +8,22 @@ const styles = {
     justifyContent: "center",
     alignItems: "center",
     flexDirection: "column",
+    padding: "2rem",
+  },
+  heading: {
+    fontSize: "calc(46px + (54 - 46) * ((100vw - 300px) / (1600 - 300)))",
+    fontWeight: 600,
+    textAlign: "center",
+    lineHeight: 1.3,
     marginBottom: "1rem",
   },
-  heading: {},
+  subheading: {
+    fontSize: "calc(18px + (22 - 18) * ((100vw - 300px) / (1600 - 300)))",
+    fontWeight: 400,
+    textAlign: "center",
+  },
   red: {
+    fontSize: "calc(60px + (66 - 60) * ((100vw - 300px) / (1600 - 300)))",
     color: colors.red,
   },
 }
@@ -23,9 +35,9 @@ const Header = ({ classes, weeksRemaining }) => {
         Raagul, only <span className={classes.red}>{weeksRemaining}</span> weeks
         remain
       </h1>
-      <h2 className={classes.subheading}>
+      <p className={classes.subheading}>
         How are you going to spend these weeks?
-      </h2>
+      </p>
     </header>
   )
 }

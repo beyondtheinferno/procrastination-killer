@@ -21,11 +21,12 @@ const globalStyles = {
       overflowWrap: "break-word",
     },
     "h1, h2, h3, h4, h5, h6": {
-      fontFamily: "serif",
+      fontFamily: "Oswald, serif",
+      fontWeight: 700,
     },
     p: {
-      fontFamily: "sans-serif",
-      fontSize: "20px",
+      fontFamily: "Poppins, sans-serif",
+      fontSize: "calc(12px + (16 - 12) * ((100vw - 300px) / (1600 - 300)))",
     },
   },
 }
