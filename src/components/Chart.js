@@ -29,10 +29,10 @@ const Chart = ({ classes, data }) => {
   const [mode, setMode] = useState(YEAR_WISE)
   return (
     <article className={classes.container}>
-      <div className={classes.controls}>
+      {/* <div className={classes.controls}>
         <button onClick={() => setMode(YEAR_WISE)}>Year Wise</button>
         <button onClick={() => setMode(FULL)}>Full</button>
-      </div>
+      </div> */}
       {mode === YEAR_WISE ? (
         <figure className={classes.chartContainer}>
           {data.chartData.map((yearData, i) => (

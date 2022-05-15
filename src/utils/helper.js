@@ -11,9 +11,9 @@ export const CURRENT_DATE = new Date()
 
 export const BIRTH_YEAR = 1998
 export const CURRENT_YEAR = CURRENT_DATE.getFullYear()
-export const FINAL_YEAR = 2075
+export const FINAL_YEAR = 2077
 
-export const getWeeksInAYear = () => {
+export const getFullData = () => {
   let year = BIRTH_YEAR
   const today = dayjs(CURRENT_DATE)
   const todayWeekNumber = today.week()

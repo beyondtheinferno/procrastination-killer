@@ -3,15 +3,15 @@ import withStyles from "react-jss"
 import globalStyles from "./styles/global"
 import fonts from "./styles/fonts"
 import { Header, Home } from "./layouts"
-import { getWeeksInAYear } from "./utils/helper"
+import { getFullData } from "./utils/helper"
 
 const styles = {
   ...globalStyles,
   ...fonts,
 }
 
-const App = () => {
-  const data = useMemo(() => getWeeksInAYear(), [])
+const App = ({ classes }) => {
+  const data = useMemo(() => getFullData(), [])
   return (
     <>
       <Header weeksRemaining={data.weeksRemaining} />

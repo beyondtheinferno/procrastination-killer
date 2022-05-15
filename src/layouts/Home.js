@@ -1,9 +1,11 @@
 import withStyles from "react-jss"
 import Chart from "../components/Chart"
+import colors from "../styles/colors"
 
 const styles = {
   container: {
     paddingBottom: "2rem",
+    background: colors.black,
   },
 }
 

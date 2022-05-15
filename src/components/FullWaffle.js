@@ -23,7 +23,6 @@ const styles = {
 }
 
 const FullWaffle = ({ classes, total, completed }) => {
-  console.log({ total, completed })
   return (
     <div className={classes.container}>
       {[...Array(total).keys()].map((_, i) => (
@@ -31,7 +30,8 @@ const FullWaffle = ({ classes, total, completed }) => {
           key={i}
           className={classes.box}
           style={{
-            background: completed < i + 1 ? colors.green : colors.red,
+            // background: completed < i + 1 ? colors.green : colors.red,
+            background: completed < i + 1 ? colors.yellow : colors.navyBlue,
           }}
         />
       ))}

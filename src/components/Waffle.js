@@ -19,6 +19,7 @@ const styles = {
   year: {
     fontWeight: 500,
     textAlign: "center",
+    color: colors.white,
   },
   box: {
     width: `${BOX_SIZE}px`,
@@ -37,7 +38,9 @@ const Waffle = ({ classes, data }) => {
             key={i}
             className={classes.box}
             style={{
-              background: data.completed < i + 1 ? colors.green : colors.red,
+              // background: data.completed < i + 1 ? colors.green : colors.red,
+              background:
+                data.completed < i + 1 ? colors.yellow : colors.navyBlue,
             }}
           />
         ))}

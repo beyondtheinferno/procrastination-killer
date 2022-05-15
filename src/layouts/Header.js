@@ -9,6 +9,8 @@ const styles = {
     alignItems: "center",
     flexDirection: "column",
     padding: "2rem",
+    background: colors.black,
+    color: colors.white,
   },
   heading: {
     fontSize: "calc(46px + (54 - 46) * ((100vw - 300px) / (1600 - 300)))",
@@ -21,10 +23,12 @@ const styles = {
     fontSize: "calc(18px + (22 - 18) * ((100vw - 300px) / (1600 - 300)))",
     fontWeight: 400,
     textAlign: "center",
+    color: colors.grey,
   },
   red: {
     fontSize: "calc(60px + (66 - 60) * ((100vw - 300px) / (1600 - 300)))",
-    color: colors.red,
+    // color: colors.green,
+    color: colors.yellow,
   },
 }
 
