@@ -1,7 +1,6 @@
 import { useState } from "react"
 import withStyles from "react-jss"
-import FullWaffle from "./FullWaffle"
-import Waffle from "./Waffle"
+import { Waffle, FullWaffle } from "."
 
 const styles = {
   container: {
@@ -24,9 +23,12 @@ const styles = {
 }
 
 const Chart = ({ classes, data }) => {
-  const YEAR_WISE = "year-wise",
-    FULL = "full"
-  const [mode, setMode] = useState(YEAR_WISE)
+  const YEAR_WISE = "year-wise"
+  // FULL = "full"
+  const [
+    mode,
+    // setMode
+  ] = useState(YEAR_WISE)
   return (
     <article className={classes.container}>
       {/* <div className={classes.controls}>

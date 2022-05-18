@@ -6,7 +6,8 @@ import fonts from "./styles/fonts"
 import { Header, Home, Minimal } from "./layouts"
 import { getFullData } from "./utils/helper"
 import colors from "./styles/colors"
-import { MinimizeIcon, MaximizeIcon } from "./assets/icons"
+import { IconTray } from "./components"
+import SettingsModal from "./components/SettingsModal"
 
 const styles = {
   ...globalStyles,
@@ -15,14 +16,6 @@ const styles = {
     position: "relative",
     minHeight: "100vh",
     background: colors.black,
-  },
-  icon: {
-    position: "absolute",
-    top: "1.5rem",
-    right: "1.8rem",
-    width: "2rem",
-    height: "2rem",
-    cursor: "pointer",
   },
 }
 
@@ -40,13 +33,23 @@ const App = ({ classes }) => {
     }
   }, [])
 
-  const handleSwitch = (oldMinimalVal) => {
-    const newMinimalVal = !oldMinimalVal
-    setMinimal(newMinimalVal)
+  const switchMinimalMode = () => {
+    let newMinimalVal = null
+    setMinimal((oldMinimalVal) => {
+      newMinimalVal = !oldMinimalVal
+      return newMinimalVal
+    })
     if (chrome && chrome.storage && chrome.storage.local) {
       chrome.storage.local.set({ minimal: newMinimalVal })
     }
   }
+
+  const [globals, setGlobals] = useState({
+    name: "Archie",
+    startYear: 1998,
+    deadlineYear: 2077,
+  })
+  const [showSettings, setShowSettings] = useState(true)
 
   return (
     <div className={classes.app}>
@@ -61,12 +64,10 @@ const App = ({ classes }) => {
           <Home data={data} />
         </>
       )}
-      <img
-        className={classes.icon}
-        src={minimal ? MaximizeIcon : MinimizeIcon}
-        onClick={() => handleSwitch(minimal)}
-        alt="Switch to minimal view."
-      />
+      <IconTray minimal={minimal} switchMinimalMode={switchMinimalMode} />
+      {/* {showSettings ? (
+        <SettingsModal globals={globals} setGlobals={setGlobals} />
+      ) : null} */}
     </div>
   )
 }

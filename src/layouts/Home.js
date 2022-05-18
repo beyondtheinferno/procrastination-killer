@@ -1,5 +1,5 @@
 import withStyles from "react-jss"
-import Chart from "../components/Chart"
+import { Chart } from "../components"
 
 const styles = {
   container: {
