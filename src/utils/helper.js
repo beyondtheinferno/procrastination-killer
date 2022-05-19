@@ -8,20 +8,17 @@ dayjs.extend(isoWeeksInYear)
 dayjs.extend(isLeapYear)
 
 export const CURRENT_DATE = new Date()
-
-export const BIRTH_YEAR = 1998
 export const CURRENT_YEAR = CURRENT_DATE.getFullYear()
-export const FINAL_YEAR = 2077
 
-export const getFullData = () => {
-  let year = BIRTH_YEAR
+export const getFullData = ({ startYear, deadlineYear }) => {
+  let year = startYear
   const today = dayjs(CURRENT_DATE)
   const todayWeekNumber = today.week()
 
   const chartData = []
   let totalWeeks = 0,
     completedWeeks = 0
-  while (year <= FINAL_YEAR) {
+  while (year <= deadlineYear) {
     const noOfWeeksInThisYear = dayjs(new Date(year, 0)).isoWeeksInYear()
     totalWeeks += noOfWeeksInThisYear
 
@@ -47,4 +44,22 @@ export const getFullData = () => {
     totalWeeks,
     weeksRemaining: totalWeeks - completedWeeks,
   }
+}
+
+// Simple object comparison
+export const isObjectEqual = (obj1, obj2) => {
+  const keys1 = Object.keys(obj1)
+  return keys1.every((key) => obj1[key] === obj2[key])
+}
+
+export const isInputValid = (globalsCopy) => {
+  if (
+    globalsCopy.startYear < CURRENT_YEAR &&
+    CURRENT_YEAR < globalsCopy.deadlineYear &&
+    globalsCopy.name &&
+    globalsCopy.name.length <= 20
+  ) {
+    return true
+  }
+  return false
 }

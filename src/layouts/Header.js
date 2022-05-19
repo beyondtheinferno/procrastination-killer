@@ -31,11 +31,11 @@ const styles = {
   },
 }
 
-const Header = ({ classes, weeksRemaining }) => {
+const Header = ({ classes, name, weeksRemaining }) => {
   return (
     <header className={classes.header}>
       <h1 className={classes.heading}>
-        Raagul, only <span className={classes.red}>{weeksRemaining}</span> weeks
+        {name}, only <span className={classes.red}>{weeksRemaining}</span> weeks
         remain
       </h1>
       <p className={classes.subheading}>

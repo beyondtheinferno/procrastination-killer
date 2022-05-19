@@ -4,7 +4,7 @@ import withStyles from "react-jss"
 import globalStyles from "./styles/global"
 import fonts from "./styles/fonts"
 import { Header, Home, Minimal } from "./layouts"
-import { getFullData } from "./utils/helper"
+import { getFullData, isObjectEqual } from "./utils/helper"
 import colors from "./styles/colors"
 import { IconTray } from "./components"
 import SettingsModal from "./components/SettingsModal"
@@ -20,7 +20,22 @@ const styles = {
 }
 
 const App = ({ classes }) => {
-  const data = useMemo(() => getFullData(), [])
+  const [globals, setGlobals] = useState({
+    name: "Archie",
+    startYear: 1998,
+    deadlineYear: 2077,
+  })
+
+  const updateGlobals = (newGlobals) => {
+    if (!isObjectEqual(globals, newGlobals)) {
+      setGlobals(newGlobals)
+      if (chrome && chrome.storage && chrome.storage.local) {
+        chrome.storage.local.set({ globals: newGlobals })
+      }
+    }
+  }
+
+  const data = useMemo(() => getFullData(globals), [globals])
   const [minimal, setMinimal] = useState(true)
 
   useEffect(() => {
@@ -29,6 +44,9 @@ const App = ({ classes }) => {
         if (data.minimal !== minimal) {
           setMinimal(data.minimal)
         }
+      })
+      chrome.storage.local.get(["globals"], (data) => {
+        updateGlobals(data.globals)
       })
     }
   }, [])
@@ -44,12 +62,7 @@ const App = ({ classes }) => {
     }
   }
 
-  const [globals, setGlobals] = useState({
-    name: "Archie",
-    startYear: 1998,
-    deadlineYear: 2077,
-  })
-  const [showSettings, setShowSettings] = useState(true)
+  const [showSettings, setShowSettings] = useState(false)
 
   return (
     <div className={classes.app}>
@@ -60,14 +73,22 @@ const App = ({ classes }) => {
         />
       ) : (
         <>
-          <Header weeksRemaining={data.weeksRemaining} />
+          <Header name={globals.name} weeksRemaining={data.weeksRemaining} />
           <Home data={data} />
         </>
       )}
-      <IconTray minimal={minimal} switchMinimalMode={switchMinimalMode} />
-      {/* {showSettings ? (
-        <SettingsModal globals={globals} setGlobals={setGlobals} />
-      ) : null} */}
+      <IconTray
+        minimal={minimal}
+        switchMinimalMode={switchMinimalMode}
+        setShowSettings={setShowSettings}
+      />
+      {showSettings ? (
+        <SettingsModal
+          globals={globals}
+          updateGlobals={updateGlobals}
+          setShowSettings={setShowSettings}
+        />
+      ) : null}
     </div>
   )
 }

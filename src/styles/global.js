@@ -24,7 +24,7 @@ const globalStyles = {
       fontFamily: "Oswald, serif",
       fontWeight: 700,
     },
-    p: {
+    "p, input, button, textarea, select": {
       fontFamily: "Poppins, sans-serif",
       fontSize: "calc(12px + (16 - 12) * ((100vw - 300px) / (1600 - 300)))",
     },

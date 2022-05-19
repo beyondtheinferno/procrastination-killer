@@ -24,13 +24,13 @@ const styles = {
   },
 }
 
-const IconTray = ({ classes, minimal, switchMinimalMode }) => {
+const IconTray = ({ classes, minimal, switchMinimalMode, setShowSettings }) => {
   return (
     <div className={classes.container}>
       <img
         className={classes.icon}
         src={SettingsIcon}
-        onClick={() => {}}
+        onClick={() => setShowSettings(true)}
         alt="Configure defaults."
       />
       <img
