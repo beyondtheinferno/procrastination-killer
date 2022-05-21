@@ -17,6 +17,10 @@ const styles = {
     minHeight: "100vh",
     background: colors.black,
   },
+  img: {
+    width: "50%",
+    height: "50%",
+  },
 }
 
 const App = ({ classes }) => {
@@ -52,11 +56,8 @@ const App = ({ classes }) => {
   }, [])
 
   const switchMinimalMode = () => {
-    let newMinimalVal = null
-    setMinimal((oldMinimalVal) => {
-      newMinimalVal = !oldMinimalVal
-      return newMinimalVal
-    })
+    let newMinimalVal = !minimal
+    setMinimal(newMinimalVal)
     if (chrome && chrome.storage && chrome.storage.local) {
       chrome.storage.local.set({ minimal: newMinimalVal })
     }

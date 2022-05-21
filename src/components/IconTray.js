@@ -1,10 +1,6 @@
 import withStyles from "react-jss"
-import {
-  MinimizeIcon,
-  MaximizeIcon,
-  Settings,
-  SettingsIcon,
-} from "../assets/icons"
+import { MinimizeIcon, MaximizeIcon, SettingsIcon } from "../assets/icons"
+import colors from "../styles/colors"
 
 const styles = {
   container: {
@@ -15,6 +11,11 @@ const styles = {
     justifyContent: "center",
     alignItems: "center",
     padding: "1.5rem",
+    background: colors.black70,
+    borderRadius: "12px",
+    "& > :first-child": {
+      marginLeft: 0,
+    },
   },
   icon: {
     width: "2rem",

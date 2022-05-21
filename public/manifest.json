@@ -3,9 +3,14 @@
   "name": "Procrastination Killer - Minimal New Tab",
   "description": "A gentle reminder of how short your life is on this planet.",
   "author": "Raagul Nagendran",
-  "version": "0.2",
+  "version": "0.2.1",
   "chrome_url_overrides": {
     "newtab": "index.html"
+  },
+  "icons": {
+    "16": "icon16.png",
+    "32": "icon32.png",
+    "96": "icon96.png"
   },
   "permissions": ["storage"]
 }
