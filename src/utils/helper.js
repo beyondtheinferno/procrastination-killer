@@ -63,3 +63,37 @@ export const isInputValid = (globalsCopy) => {
   }
   return false
 }
+
+// Deadlines page
+export const getDateInputFormat = () => {
+  const offset = CURRENT_DATE.getTimezoneOffset()
+  const formattedDate = new Date(CURRENT_DATE.getTime() - offset * 60 * 1000)
+  return formattedDate.toISOString().split("T")[0]
+}
+
+export const isDeadlinesInputValid = (globals) => {
+  const { deadlines } = globals
+  if (deadlines.length > 0) {
+    const allTrue = deadlines.every((d) => d.name && d.dueOn)
+    if (allTrue) {
+      return true
+    }
+  }
+  return false
+}
+
+export const getDeadlinesData = (deadlines) => {
+  if (!deadlines.length) return []
+  return deadlines.map((d) => {
+    const dueOn = dayjs(d.dueOn)
+    const today = dayjs(CURRENT_DATE)
+    return {
+      ...d,
+      formattedDueOn: dueOn.format("DD MMM YY"),
+      days: dueOn.diff(today, "day"),
+      weeks: dueOn.diff(today, "week"),
+      months: dueOn.diff(today, "month"),
+      years: dueOn.diff(today, "year"),
+    }
+  })
+}

@@ -1,13 +1,12 @@
 /*global chrome*/
-import { useState, useEffect, useMemo } from "react"
+import { useState, useMemo } from "react"
 import withStyles from "react-jss"
 import globalStyles from "./styles/global"
 import fonts from "./styles/fonts"
-import { Header, Home, Minimal } from "./layouts"
+import { Header, Home, Minimal, DeadlinesPage } from "./layouts"
 import { getFullData, isObjectEqual } from "./utils/helper"
 import colors from "./styles/colors"
-import { IconTray } from "./components"
-import SettingsModal from "./components/SettingsModal"
+import { IconTray, SettingsModal } from "./components"
 
 const styles = {
   ...globalStyles,
@@ -25,9 +24,13 @@ const styles = {
 
 const App = ({ classes }) => {
   const [globals, setGlobals] = useState({
-    name: "Archie",
+    deadlinesPage: true,
+    deadlines: [],
+    //
+    name: "Raagul",
     startYear: 1998,
     deadlineYear: 2077,
+    minimal: true,
   })
 
   const updateGlobals = (newGlobals) => {
@@ -40,34 +43,24 @@ const App = ({ classes }) => {
   }
 
   const data = useMemo(() => getFullData(globals), [globals])
-  const [minimal, setMinimal] = useState(true)
-
-  useEffect(() => {
-    if (chrome && chrome.storage && chrome.storage.local) {
-      chrome.storage.local.get(["minimal"], (data) => {
-        if (data.minimal !== minimal) {
-          setMinimal(data.minimal)
-        }
-      })
-      chrome.storage.local.get(["globals"], (data) => {
-        updateGlobals(data.globals)
-      })
-    }
-  }, [])
 
   const switchMinimalMode = () => {
-    let newMinimalVal = !minimal
-    setMinimal(newMinimalVal)
-    if (chrome && chrome.storage && chrome.storage.local) {
-      chrome.storage.local.set({ minimal: newMinimalVal })
-    }
+    updateGlobals({
+      ...globals,
+      minimal: !globals.minimal,
+    })
   }
 
   const [showSettings, setShowSettings] = useState(false)
 
   return (
     <div className={classes.app}>
-      {minimal ? (
+      <DeadlinesPage
+        globals={globals}
+        updateGlobals={updateGlobals}
+        switchMinimalMode={switchMinimalMode}
+      />
+      {/* {globals.minimal ? (
         <Minimal
           weeksRemaining={data.weeksRemaining}
           totalWeeks={data.totalWeeks}
@@ -79,7 +72,7 @@ const App = ({ classes }) => {
         </>
       )}
       <IconTray
-        minimal={minimal}
+        minimal={globals.minimal}
         switchMinimalMode={switchMinimalMode}
         setShowSettings={setShowSettings}
       />
@@ -89,7 +82,7 @@ const App = ({ classes }) => {
           updateGlobals={updateGlobals}
           setShowSettings={setShowSettings}
         />
-      ) : null}
+      ) : null} */}
     </div>
   )
 }

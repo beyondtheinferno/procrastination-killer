@@ -2,7 +2,7 @@ import { useState } from "react"
 import withStyles from "react-jss"
 import { CloseIcon } from "../assets/icons"
 import colors from "../styles/colors"
-import { isInputValid } from "../utils/helper"
+import { isDeadlinesInputValid, getDateInputFormat } from "../utils/helper"
 
 const BREAKPOINT = 430
 
@@ -20,15 +20,13 @@ const styles = {
   },
   container: {
     position: "relative",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "flex-start",
-    flexDirection: "column",
     background: colors.black,
     color: colors.white,
     border: `1px solid ${colors.white}`,
     padding: "2.5rem",
     borderRadius: "10px",
+    maxHeight: "80vh",
+    overflowY: "scroll",
     [`@media only screen and (max-width: ${BREAKPOINT}px)`]: {
       width: "100%",
       minWidth: "100%",
@@ -75,7 +73,7 @@ const styles = {
   },
 }
 
-const SettingsModal = ({
+const DeadlinesModal = ({
   classes,
   globals,
   updateGlobals,
@@ -83,20 +81,36 @@ const SettingsModal = ({
 }) => {
   const [globalsCopy, setGlobalsCopy] = useState({ ...globals })
 
-  const handleChange = (e, type) => {
+  const handleChange = (e, id, type) => {
     const mapping = {
       name: e.target.value,
-      startYear: Number(e.target.value),
-      deadlineYear: Number(e.target.value),
+      dueOn: e.target.value,
     }
+    const updatedDeadlines = globalsCopy.deadlines.map((d) => {
+      if (d.id === id)
+        return {
+          ...d,
+          [type]: mapping[type],
+        }
+      return d
+    })
     setGlobalsCopy((d) => ({
       ...d,
-      [type]: mapping[type],
+      deadlines: updatedDeadlines,
+    }))
+  }
+
+  const createNewDeadline = () => {
+    const id = globalsCopy.deadlines.length
+    const newDeadline = { id, name: "", dueOn: getDateInputFormat() }
+    setGlobalsCopy((d) => ({
+      ...d,
+      deadlines: [...d.deadlines, newDeadline],
     }))
   }
 
   const closeSettings = () => {
-    if (!isInputValid(globalsCopy)) return
+    if (!isDeadlinesInputValid(globalsCopy)) return
     updateGlobals(globalsCopy)
     setShowSettings(false)
   }
@@ -105,7 +119,30 @@ const SettingsModal = ({
     <div className={classes.fullWidth}>
       <div className={classes.container}>
         <h4 className={classes.heading}>Defaults</h4>
-        <div className={classes.row}>
+        {globalsCopy.deadlines.length
+          ? globalsCopy.deadlines.map((d) => (
+              <div className={classes.row} key={d.id}>
+                <p className={classes.label}>Name</p>
+                <input
+                  className={classes.input}
+                  type="text"
+                  placeholder="Enter the deadline"
+                  value={d.name}
+                  onChange={(e) => handleChange(e, d.id, "name")}
+                />
+                <p className={classes.label}>Due On</p>
+                <input
+                  type="date"
+                  value={d.dueOn}
+                  onChange={(e) => handleChange(e, d.id, "dueOn")}
+                  // min="2018-01-01"
+                  // max="2018-12-31"
+                />
+              </div>
+            ))
+          : null}
+        <button onClick={createNewDeadline}>Add a new deadline!</button>
+        {/* <div className={classes.row}>
           <p className={classes.label}>Name</p>
           <input
             className={classes.input}
@@ -114,27 +151,7 @@ const SettingsModal = ({
             value={globalsCopy.name}
             onChange={(e) => handleChange(e, "name")}
           />
-        </div>
-        <div className={classes.row}>
-          <p className={classes.label}>Birth Year</p>
-          <input
-            className={classes.input}
-            type="number"
-            placeholder="Enter your birth year"
-            value={globalsCopy.startYear}
-            onChange={(e) => handleChange(e, "startYear")}
-          />
-        </div>
-        <div className={classes.row}>
-          <p className={classes.label}>Deadline Year</p>
-          <input
-            className={classes.input}
-            type="number"
-            placeholder="Enter your deadline year"
-            value={globalsCopy.deadlineYear}
-            onChange={(e) => handleChange(e, "deadlineYear")}
-          />
-        </div>
+        </div> */}
         <img
           className={classes.close}
           src={CloseIcon}
@@ -146,4 +163,4 @@ const SettingsModal = ({
   )
 }
 
-export default withStyles(styles)(SettingsModal)
+export default withStyles(styles)(DeadlinesModal)
