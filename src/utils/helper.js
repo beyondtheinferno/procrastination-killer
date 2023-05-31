@@ -84,8 +84,9 @@ export const isDeadlinesInputValid = (globals) => {
 
 export const getDeadlinesData = (deadlines) => {
   if (!deadlines.length) return []
-  return deadlines.map((d) => {
+  const data = deadlines.map((d) => {
     const dueOn = dayjs(d.dueOn)
+    const dateTime = new Date(dueOn).getTime()
     const today = dayjs(CURRENT_DATE)
     return {
       ...d,
@@ -94,6 +95,8 @@ export const getDeadlinesData = (deadlines) => {
       weeks: dueOn.diff(today, "week"),
       months: dueOn.diff(today, "month"),
       years: dueOn.diff(today, "year"),
+      dateTime,
     }
   })
+  return data.sort((a, b) => a.dateTime - b.dateTime)
 }
