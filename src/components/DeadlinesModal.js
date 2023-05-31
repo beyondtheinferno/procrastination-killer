@@ -118,8 +118,9 @@ const DeadlinesModal = ({
   }
 
   const closeSettings = () => {
-    if (!isDeadlinesInputValid(globalsCopy)) return
-    updateGlobals(globalsCopy)
+    if (isDeadlinesInputValid(globalsCopy)) {
+      updateGlobals(globalsCopy)
+    }
     setShowSettings(false)
   }
 

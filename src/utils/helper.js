@@ -75,11 +75,10 @@ export const isDeadlinesInputValid = (globals) => {
   const { deadlines } = globals
   if (deadlines.length > 0) {
     const allTrue = deadlines.every((d) => d.name && d.dueOn)
-    if (allTrue) {
-      return true
-    }
+    if (allTrue) return true
+    else return false
   }
-  return false
+  return true // for empty inputs
 }
 
 export const getDeadlinesData = (deadlines) => {

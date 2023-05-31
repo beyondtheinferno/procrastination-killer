@@ -1,5 +1,5 @@
 /*global chrome*/
-import { useState, useMemo } from "react"
+import { useState, useEffect, useMemo } from "react"
 import withStyles from "react-jss"
 import globalStyles from "./styles/global"
 import fonts from "./styles/fonts"
@@ -52,6 +52,15 @@ const App = ({ classes }) => {
   }
 
   const [showSettings, setShowSettings] = useState(false)
+
+  useEffect(() => {
+    if (chrome && chrome.storage && chrome.storage.local) {
+      chrome.storage.local.get(["globals"], (data) => {
+        console.log(data)
+        updateGlobals(data.globals)
+      })
+    }
+  }, [])
 
   return (
     <div className={classes.app}>
