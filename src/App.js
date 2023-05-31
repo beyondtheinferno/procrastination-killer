@@ -34,12 +34,12 @@ const App = ({ classes }) => {
   })
 
   const updateGlobals = (newGlobals) => {
-    if (!isObjectEqual(globals, newGlobals)) {
-      setGlobals(newGlobals)
-      if (chrome && chrome.storage && chrome.storage.local) {
-        chrome.storage.local.set({ globals: newGlobals })
-      }
+    // if (!isObjectEqual(globals, newGlobals)) {
+    setGlobals(newGlobals)
+    if (chrome && chrome.storage && chrome.storage.local) {
+      chrome.storage.local.set({ globals: newGlobals })
     }
+    // }
   }
 
   const data = useMemo(() => getFullData(globals), [globals])

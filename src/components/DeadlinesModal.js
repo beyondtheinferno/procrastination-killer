@@ -109,6 +109,14 @@ const DeadlinesModal = ({
     }))
   }
 
+  const deleteDeadline = (id) => {
+    const newDeadlines = globalsCopy.deadlines.filter((d) => d.id !== id)
+    setGlobalsCopy((d) => ({
+      ...d,
+      deadlines: newDeadlines,
+    }))
+  }
+
   const closeSettings = () => {
     if (!isDeadlinesInputValid(globalsCopy)) return
     updateGlobals(globalsCopy)
@@ -138,6 +146,9 @@ const DeadlinesModal = ({
                   // min="2018-01-01"
                   // max="2018-12-31"
                 />
+                <button onClick={() => deleteDeadline(d.id)}>
+                  Delete this deadline!
+                </button>
               </div>
             ))
           : null}
